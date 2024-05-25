@@ -1,7 +1,7 @@
 # Serial communication
 
 Example code how to transfer data over serial communication, both read and write.<br>
-Was written and tested in Ubuntu 22.04 with Python 3.10.12
+Was written and tested in Ubuntu 22.04 with Python 3.10.12 and g++ 11.4.0
 
 ## Install:
 ```shell
