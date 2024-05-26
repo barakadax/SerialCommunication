@@ -1,6 +1,6 @@
 import serial
 
-rec_port = '/dev/pts/7'
+rec_port = '/dev/pts/6'
 
 data = b''
 with serial.Serial(rec_port, baudrate=115_200, timeout=0.1) as rec_ser:  # exclusive=True

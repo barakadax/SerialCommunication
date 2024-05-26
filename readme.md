@@ -32,3 +32,18 @@ Run any of the writers.
 ## Documentation:
 <a href="https://pyserial.readthedocs.io/en/latest/#">PySerial</a><br>
 <a href="https://pyserial-asyncio.readthedocs.io/en/latest/index.html">Asyncio PySerial</a>
+
+## TODO:
+<ul>
+    <li>C++ ⌛</li>
+    <li>ANSI C 🎯</li>
+    <li>Forth</li>
+    <li>Rexx</li>
+    <li>Focal</li>
+    <li>Rapira</li>
+    <li>Modula</li>
+    <li>Prolog</li>
+    <li>Cobol</li>
+    <li>Ruby</li>
+    <li>ASM X86</li>
+</ul>

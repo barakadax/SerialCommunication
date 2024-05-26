@@ -9,7 +9,7 @@
 using namespace std;
 
 int main() {
-    string portName = "/dev/pts/8";
+    string portName = "/dev/pts/3";
     int serialPort = open(portName.c_str(), O_WRONLY | O_NOCTTY);
 
     if (serialPort == -1) {
@@ -34,16 +34,17 @@ int main() {
 
     tcsetattr(serialPort, TCSANOW, &tty);
 
-    while (true)
-    {
-        cout << "Enter a message to send: ";
-        string dataToWrite;
-        getline(cin, dataToWrite);
+    string dataToWrite;
+    wstring_convert<codecvt_utf8_utf16<wchar_t>> converter;
+    int bytesWritten;
 
-        wstring_convert<codecvt_utf8_utf16<wchar_t>> converter;
+    while (true) {
+        cout << "Enter a message to send: ";
+        cin >> dataToWrite;
+
         wstring utf16Data = converter.from_bytes(dataToWrite);
 
-        int bytesWritten = write(serialPort, utf16Data.c_str(), utf16Data.size() * sizeof(wchar_t));
+        bytesWritten = write(serialPort, utf16Data.c_str(), utf16Data.size() * sizeof(wchar_t));
 
         if (bytesWritten == -1) {
             cerr << "Error writing to serial port" << endl;
