@@ -12,7 +12,7 @@ pip install pyserial-asyncio
 
 ## How to compile C++:
 ```shell
-g++ -o a write.cpp
+g++ -o <output file name> <file to compile>.cpp
 ```
 
 ## How to run:
