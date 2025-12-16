@@ -1,5 +1,4 @@
 # Serial communication
-
 Example code how to transfer data over serial communication, both read and write.<br>
 Was written and tested in Ubuntu 22.04 with Python 3.10.12 and g++ 11.4.0
 
@@ -35,7 +34,6 @@ Run any of the writers.
 
 ## TODO:
 <ul>
-    <li>C++ ⌛</li>
     <li>ANSI C 🎯</li>
     <li>Forth</li>
     <li>Rexx</li>

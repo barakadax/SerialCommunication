@@ -9,7 +9,7 @@
 using namespace std;
 
 int main() {
-    string portName = "/dev/pts/3";
+    string portName = "/dev/pts/0";
     int serialPort = open(portName.c_str(), O_WRONLY | O_NOCTTY);
 
     if (serialPort == -1) {
@@ -40,7 +40,9 @@ int main() {
 
     while (true) {
         cout << "Enter a message to send: ";
-        cin >> dataToWrite;
+        getline(cin, dataToWrite);
+
+        if (dataToWrite.empty()) continue;
 
         wstring utf16Data = converter.from_bytes(dataToWrite);
 
