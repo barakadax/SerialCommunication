@@ -1,6 +1,11 @@
+import sys
 import serial
 
-sender_port = '/dev/pts/1'
+if len(sys.argv) < 2:
+    print(f"Usage: {sys.argv[0]} <port>")
+    sys.exit(1)
+
+sender_port = sys.argv[1]
 
 with serial.Serial(sender_port, baudrate=115_200, exclusive=False) as ser:
     while True:

@@ -1,6 +1,11 @@
+import sys
 import serial
 
-rec_port = '/dev/pts/2'
+if len(sys.argv) < 2:
+    print(f"Usage: {sys.argv[0]} <port>")
+    sys.exit(1)
+
+rec_port = sys.argv[1]
 
 data = b''
 with serial.Serial(rec_port, baudrate=115_200, timeout=0.1) as rec_ser:  # exclusive=True
@@ -10,5 +15,5 @@ with serial.Serial(rec_port, baudrate=115_200, timeout=0.1) as rec_ser:  # exclu
             data += chunk
         if not chunk and data:
             res = data.decode('utf-16')
-            print(f'len of message: {len(res)}\ncontent: {res}')
+            print(f'len of message: {len(res)}\ncontent: {res}', flush=True)
             data = b''

@@ -8,8 +8,12 @@
 #include <locale>
 #include <cstdint>
 
-int main() {
-    const char* port = "/dev/pts/2";
+int main(int argc, char* argv[]) {
+    if (argc < 2) {
+        std::cerr << "Usage: " << argv[0] << " <port>" << std::endl;
+        return 1;
+    }
+    const char* port = argv[1];
     int fd = open(port, O_RDONLY | O_NONBLOCK);
     
     if (fd < 0) {

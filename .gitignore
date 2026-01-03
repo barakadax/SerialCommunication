@@ -4,3 +4,9 @@ a.out
 read
 write
 .vscode
+Cargo.lock
+target
+read_async
+write_async
+read_sync
+write_sync

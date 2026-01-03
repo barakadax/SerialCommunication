@@ -1,0 +1,22 @@
+[package]
+name = "cable_rust"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+
+[[bin]]
+name = "read_sync"
+path = "src/bin/read_sync.rs"
+
+[[bin]]
+name = "read_async"
+path = "src/bin/read_async.rs"
+
+[[bin]]
+name = "write_sync"
+path = "src/bin/write_sync.rs"
+
+[[bin]]
+name = "write_async"
+path = "src/bin/write_async.rs"

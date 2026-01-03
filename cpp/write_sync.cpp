@@ -8,10 +8,14 @@
 
 using namespace std;
 
-int main() {
-    string portName = "/dev/pts/0";
+int main(int argc, char* argv[]) {
+    if (argc < 2) {
+        cerr << "Usage: " << argv[0] << " <port>" << endl;
+        return 1;
+    }
+    string portName = argv[1];
     int serialPort = open(portName.c_str(), O_WRONLY | O_NOCTTY);
-
+    
     if (serialPort == -1) {
         cerr << "Error opening serial port: " << portName << endl;
         return 1;
@@ -35,7 +39,7 @@ int main() {
     tcsetattr(serialPort, TCSANOW, &tty);
 
     string dataToWrite;
-    wstring_convert<codecvt_utf8_utf16<wchar_t>> converter;
+    wstring_convert<codecvt_utf8_utf16<char16_t>, char16_t> converter;
     int bytesWritten;
 
     while (true) {
@@ -44,9 +48,10 @@ int main() {
 
         if (dataToWrite.empty()) continue;
 
-        wstring utf16Data = converter.from_bytes(dataToWrite);
+        u16string utf16Data = u"\uFEFF";
+        utf16Data += converter.from_bytes(dataToWrite);
 
-        bytesWritten = write(serialPort, utf16Data.c_str(), utf16Data.size() * sizeof(wchar_t));
+        bytesWritten = write(serialPort, utf16Data.c_str(), utf16Data.size() * sizeof(char16_t));
 
         if (bytesWritten == -1) {
             cerr << "Error writing to serial port" << endl;
