@@ -37,7 +37,7 @@ fn main() {
         }
 
         let mut utf16_data: Vec<u16> = Vec::new();
-        utf16_data.push(0xFEFF); // BOM
+        utf16_data.push(0xFEFF);
         utf16_data.extend(data_to_write.encode_utf16());
         let bytes_to_write = utf16_data.len() * 2;
         

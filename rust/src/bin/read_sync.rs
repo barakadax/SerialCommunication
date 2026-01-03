@@ -33,7 +33,6 @@ fn main() {
             if !u16_data.is_empty() {
                 match String::from_utf16(&u16_data) {
                     Ok(mut utf8_str) => {
-                        // Check for BOM (EF BB BF in UTF-8 is U+FEFF)
                         if utf8_str.starts_with('\u{feff}') {
                             utf8_str.remove(0);
                         }

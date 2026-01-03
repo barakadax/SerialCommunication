@@ -8,7 +8,7 @@ if len(sys.argv) < 2:
 rec_port = sys.argv[1]
 
 data = b''
-with serial.Serial(rec_port, baudrate=115_200, timeout=0.1) as rec_ser:  # exclusive=True
+with serial.Serial(rec_port, baudrate=115_200, timeout=0.1) as rec_ser:
     while True:
         chunk = rec_ser.read(1)
         if chunk:
