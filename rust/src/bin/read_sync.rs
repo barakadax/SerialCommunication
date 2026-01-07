@@ -24,27 +24,8 @@ fn main() {
         let mut buffer = [0u8; 4096];
         match file.read(&mut buffer) {
             Ok(bytes_read) if bytes_read > 0 => {
-                let u16_count = bytes_read / 2;
-                let mut u16_data = Vec::with_capacity(u16_count);
-
-                for i in (0..bytes_read & !1).step_by(2) {
-                    let code_unit = (buffer[i] as u16) | ((buffer[i + 1] as u16) << 8);
-                    u16_data.push(code_unit);
-                }
-
-                if !u16_data.is_empty() {
-                    match String::from_utf16(&u16_data) {
-                        Ok(mut utf8_str) => {
-                            if utf8_str.starts_with('\u{feff}') {
-                                utf8_str.remove(0);
-                            }
-                            println!("data received: {}", utf8_str);
-                        }
-                        Err(_) => {
-                            eprintln!("UTF conversion error");
-                        }
-                    }
-                }
+                let utf8_str = String::from_utf8_lossy(&buffer[..bytes_read]);
+                println!("data received: {}", utf8_str);
             }
             Ok(_) => {
                 // EOF or no data

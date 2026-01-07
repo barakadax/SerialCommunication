@@ -40,13 +40,7 @@ fn main() {
             continue;
         }
 
-        let mut utf16_bytes: Vec<u8> = Vec::new();
-        utf16_bytes.extend_from_slice(&0xFEFFu16.to_le_bytes());
-        for c in data_to_write.encode_utf16() {
-            utf16_bytes.extend_from_slice(&c.to_le_bytes());
-        }
-        
-        if let Err(e) = file.write_all(&utf16_bytes) {
+        if let Err(e) = file.write_all(data_to_write.as_bytes()) {
             eprintln!("Error writing to serial port: {}", e);
         }
     }

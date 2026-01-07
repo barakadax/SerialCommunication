@@ -49,6 +49,7 @@ It will create 2 addresses (e.g., `/dev/pts/12` and `/dev/pts/13`).
 python3 python/read.py /dev/pts/12
 
 # Rust
+cd rust
 cargo run --bin read_sync -- /dev/pts/12
 ```
 
@@ -61,6 +62,7 @@ cargo run --bin read_sync -- /dev/pts/12
 python3 python/write.py /dev/pts/13
 
 # Rust
+cd rust
 cargo run --bin write_sync -- /dev/pts/13
 ```
 

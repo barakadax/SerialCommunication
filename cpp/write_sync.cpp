@@ -39,7 +39,6 @@ int main(int argc, char* argv[]) {
     tcsetattr(serialPort, TCSANOW, &tty);
 
     string dataToWrite;
-    wstring_convert<codecvt_utf8_utf16<char16_t>, char16_t> converter;
     int bytesWritten;
 
     while (true) {
@@ -48,10 +47,7 @@ int main(int argc, char* argv[]) {
 
         if (dataToWrite.empty()) continue;
 
-        u16string utf16Data = u"\uFEFF";
-        utf16Data += converter.from_bytes(dataToWrite);
-
-        bytesWritten = write(serialPort, utf16Data.c_str(), utf16Data.size() * sizeof(char16_t));
+        bytesWritten = write(serialPort, dataToWrite.c_str(), dataToWrite.size());
 
         if (bytesWritten == -1) {
             cerr << "Error writing to serial port" << endl;
