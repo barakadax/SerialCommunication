@@ -19,9 +19,11 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
+    char buffer[4096];
+    ssize_t bytesRead = 0;
+
     while (true) {
-        char buffer[4096];
-        ssize_t bytesRead = read(fd, buffer, sizeof(buffer) - 1);
+        bytesRead = read(fd, buffer, sizeof(buffer) - 1);
         
         if (bytesRead > 0) {
             buffer[bytesRead] = '\0';

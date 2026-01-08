@@ -47,7 +47,7 @@ def test_pair(reader_cmd, writer_cmd, pty_reader, pty_writer, reader_label, writ
         cwd=r_cwd
     )
     
-    time.sleep(0.5)
+    time.sleep(0.25)
     
     writer_proc = subprocess.Popen(
         w_cmd + [pty_writer],
@@ -59,16 +59,15 @@ def test_pair(reader_cmd, writer_cmd, pty_reader, pty_writer, reader_label, writ
         cwd=w_cwd
     )
     
-    test_messages = ["hello world", "שלום עולם"]
-    received_all = True
-    
+    message_results = []
+    test_messages = ["hello world", "שלום עולם", "Very long message to test if it will work or not"]
     try:
         for msg in test_messages:
             writer_proc.stdin.write(msg + "\n")
             writer_proc.stdin.flush()
-            time.sleep(0.5)
+            time.sleep(0.25)
             
-        time.sleep(1.0)
+        time.sleep(0.5)
     finally:
         writer_proc.terminate()
         reader_proc.terminate()
@@ -82,11 +81,12 @@ def test_pair(reader_cmd, writer_cmd, pty_reader, pty_writer, reader_label, writ
             reader_out, reader_err = reader_proc.communicate()
         
         for msg in test_messages:
-            if msg not in reader_out:
-                received_all = False
+            received = msg in reader_out
+            message_results.append((msg, received))
+            if not received:
                 print(f"FAILED: Reader='{reader_label}', Writer='{writer_label}', Message='{msg}'")
                 
-    return received_all
+    return message_results
 
 def main():
     socat_proc, pty1, pty2 = run_socat()
@@ -129,18 +129,19 @@ def main():
                 else:
                     w_label = f"cpp {w_cmd[0].split('/')[-1]}"
                 
-                success = test_pair(r_cmd, w_cmd, pty1, pty2, r_label, w_label)
-                results.append((r_label, w_label, success))
-                time.sleep(0.5)
+                msg_results = test_pair(r_cmd, w_cmd, pty1, pty2, r_label, w_label)
+                for msg, success in msg_results:
+                    results.append((r_label, w_label, msg, success))
+                time.sleep(0.25)
     finally:
         socat_proc.terminate()
         
-    print("\n--- TEST RESULTS ---")
-    print(f"{'Reader':<30} | {'Writer':<30} | {'Result':<10}")
-    print("-" * 75)
-    for r, w, res in results:
+    print(f"\n--- TEST RESULTS ---\n{'Reader':<30} | {'Writer':<30} | {'Result':<10} | {'Message':<35} ")
+    print("-" * 120)
+    for r, w, m, res in results:
         status = "PASS" if res else "FAIL"
-        print(f"{r:<30} | {w:<30} | {status:<10}")
+        m_display = (m[:32] + '...') if len(m) > 35 else m
+        print(f"{r:<30} | {w:<30} | {status:<10} | {m_display:<35}")
 
 if __name__ == "__main__":
     main()
